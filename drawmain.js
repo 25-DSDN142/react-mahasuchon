@@ -1,4 +1,12 @@
 // ----=  HANDS  =----
+
+
+
+let temp = []; //temp
+let oldX;
+let oldX2;
+
+
 /* load images here */
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
@@ -54,6 +62,7 @@ function drawInteraction(faces, hands) {
     let indexFingerDipX = hand.index_finger_dip.x;
     let indexFingerDipY = hand.index_finger_dip.y;
     let indexFingerDipZ = hand.index_finger_dip.z3D;
+
 
     let indexFingerTipZ = hand.index_finger_tip.z3D;
 
@@ -113,15 +122,56 @@ function drawInteraction(faces, hands) {
 
     /*
     Start drawing on the hands here
-
-    
     */
+
+
+
+    print(oldX, indexFingerTipX)
+
+    if (oldX === indexFingerTipX || oldX2 === indexFingerTipX) {
+      print("not updated");
+    }
+
+
+
+    temp.push({
+      xPos: indexFingerTipX,
+      yPos: indexFingerTipY,
+      zPos: indexFingerTipZ
+    });
+
+    for (let p of temp) {
+      rect(p.xPos, p.yPos, 50, 50);
+      p.yPos -= 2;
+    }
+
+    if (temp.length > 100) {
+      temp.shift();
+    }
+
+    oldX = indexFingerTipX;
+
+    oldX2 = oldX;
+
+    /*
+
+    so, it draws the left hand then draws the right hand. so, i need two oldX variables. what if it draws only one hand? i need to compare both current X with oldX and oldX2, to see when the variables arent being updated.
+
+    */
+
+
+
 
     fill(225, 225, 0);
     ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
     ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
-    text("test",255,255)
-    strokeWeight(0)
+    text(frameCount,255,255)
+
+
+
+
+
+    /*strokeWeight(0)
     for (i=1;i<76;i++){
       console.log(pinkyFingerTipY)
 
@@ -133,6 +183,8 @@ function drawInteraction(faces, hands) {
     fill((pinkyFingerDipY/768)*255)
     rect(0,pinkyFingerTipY,1920,50)
 
+
+    */
 
     //rect(thumbTipX,thumbTipY,50,50);
 
@@ -148,6 +200,38 @@ function drawInteraction(faces, hands) {
   }
   // You can make addtional elements here, but keep the hand drawing inside the for loop. 
   //------------------------------------------------------
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function ghostSelf(){
+  push();
+  ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
+  pop();
 }
 
 
