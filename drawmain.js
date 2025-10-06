@@ -5,6 +5,7 @@
 let temp = []; //temp
 let oldX;
 let oldX2;
+let tempTimer = 1;
 
 
 /* load images here */
@@ -124,30 +125,34 @@ function drawInteraction(faces, hands) {
     Start drawing on the hands here
     */
 
-
-
-    print(oldX, indexFingerTipX)
-
-    if (oldX === indexFingerTipX || oldX2 === indexFingerTipX) {
-      print("not updated");
+  
+    
+    if (tempTimer < 25){
+      tempTimer ++;
+    } else {
+      tempTimer = 0;
     }
 
 
-
-    temp.push({
-      xPos: indexFingerTipX,
-      yPos: indexFingerTipY,
-      zPos: indexFingerTipZ
-    });
-
-    for (let p of temp) {
-      rect(p.xPos, p.yPos, 50, 50);
-      p.yPos -= 2;
+    if (tempTimer === 24){
+          temp.push({
+            xPos: indexFingerTipX,
+            yPos: indexFingerTipY,
+            zPos: indexFingerTipZ
+          });
     }
 
-    if (temp.length > 100) {
-      temp.shift();
-    }
+
+  for (let p of temp) {
+    rect(p.xPos, p.yPos, 50, 50);
+    p.yPos -= 2;
+  }
+
+  if (temp.length > 100) {
+    temp.shift();
+  }
+
+
 
     oldX = indexFingerTipX;
 
@@ -166,6 +171,7 @@ function drawInteraction(faces, hands) {
     ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
     ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
     text(frameCount,255,255)
+    text(tempTimer,255,355)
 
 
 
