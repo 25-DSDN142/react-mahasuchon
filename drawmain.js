@@ -156,7 +156,7 @@ function drawInteraction(faces, hands) {
 
     
 
-    if (updated === false){     //i think this runs twice for some reason? why?
+    if (updated === false){     // if the points have been updated, run this
       for (let p of locationA) {      //go through each entry in locationA
         noStroke;
         strokeWeight(0);
@@ -170,7 +170,10 @@ function drawInteraction(faces, hands) {
       }
     }
 
-    if (updated === true){
+
+    
+
+    if (updated === true){        // if the points have not been, run this
       for (let p of locationA) {      //go through each entry in locationA
         noStroke;
         strokeWeight(0);
@@ -178,7 +181,6 @@ function drawInteraction(faces, hands) {
         fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
         
         rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
-
       }
     }
 
@@ -195,6 +197,12 @@ function drawInteraction(faces, hands) {
     //ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
     text(frameCount,255,255)
     text(tempTimer,255,355)
+
+    /*Because of how the points dont instantly update, this is a solution i've come up with.
+
+    checks current update's position from array, then checks position from however many updates ago. if they are the same, you know the points havent been updated yet.
+    
+    unfortunately this results in a very low frame rate output*/
 
     for (i = 2; i < locationA.length;i++){
       let currentUpdate = locationA[i].xPosIndexTip;
