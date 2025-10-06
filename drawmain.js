@@ -8,7 +8,11 @@ let oldX2;
 let tempTimer = 1;
 let delayBetweenFrames = 26;
 
+let handswitch = 1;
+
 let locationA = [];
+
+
 let locationB = [];
 
 let updated = false;
@@ -147,33 +151,75 @@ function drawInteraction(faces, hands) {
           });
     }*/
 
-    locationA.push({
-      xPosIndexTip: indexFingerTipX,
-      yPosIndexTip: indexFingerTipY,
-      zPosIndexTip: indexFingerTipZ,
-      lifespan: 50
-    });
+/*
+    if (handswitch === 1){
+      locationA.push({
+        xPosIndexTip: indexFingerTipX,
+        yPosIndexTip: indexFingerTipY,
+        zPosIndexTip: indexFingerTipZ,
+        lifespan: 100
+      });
+      handswitch = 2
+    } else if (handswitch = 2) {
+      locationB.push({
+        xPosIndexTip: indexFingerTipX,
+        yPosIndexTip: indexFingerTipY,
+        zPosIndexTip: indexFingerTipZ,
+        lifespan: 100
+      });
+      handswitch = 1
+    }*/
 
-    
 
-    if (updated === false){     // if the points have been updated, run this
-      for (let p of locationA) {      //go through each entry in locationA
-        noStroke;
-        strokeWeight(0);
+
+
+      locationA.push({
+        xPosIndexTip: indexFingerTipX,
+        yPosIndexTip: indexFingerTipY,
+        zPosIndexTip: indexFingerTipZ,
+        lifespan: 100
+      });
+
+
+    updated = true
+
+
+//alternate way of limiting frame rate. this limit depends on your device!!!
+
+    if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs
+      if (frameCount % 10 === 1){
+          for (let p of locationA) {      //go through each entry in locationA
+          noStroke;
+          strokeWeight(0);
+            
+          fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
           
-        fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
+          rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
+          p.yPosIndexTip -= 2;
+          p.lifespan -= 5;
+          //updated = false;
+        }
+      } else {
+
+          for (let p of locationA) {      //go through each entry in locationA
+          noStroke;
+          strokeWeight(0);
+            
+          fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
+          
+          rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
+
+          //updated = false;
         
-        rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
-        p.yPosIndexTip -= 10;
-        p.lifespan -= 20
-        updated = false;
       }
+
+
     }
 
-
+  }
     
-
-    if (updated === true){        // if the points have not been, run this
+ 
+    if (updated === false){      // every not updated frame this runs. still draws elements on screen even if the points have not been updated
       for (let p of locationA) {      //go through each entry in locationA
         noStroke;
         strokeWeight(0);
@@ -183,6 +229,17 @@ function drawInteraction(faces, hands) {
         rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
       }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -192,11 +249,13 @@ function drawInteraction(faces, hands) {
       locationA.shift();
     }
 
+
+
     //fill(225, 225, 0);
     //ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
     //ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
-    text(frameCount,255,255)
-    text(tempTimer,255,355)
+    //text(frameCount,255,255)
+    //text(tempTimer,255,355)
 
     /*Because of how the points dont instantly update, this is a solution i've come up with.
 
@@ -204,24 +263,20 @@ function drawInteraction(faces, hands) {
     
     unfortunately this results in a very low frame rate output*/
 
+    /*
     for (i = 2; i < locationA.length;i++){
       let currentUpdate = locationA[i].xPosIndexTip;
-
       let prev1Update = locationA[i-1].xPosIndexTip;
       let prev2Update = locationA[i-2].xPosIndexTip;
 
-      console.log("current update is " + currentUpdate + "prev 2 update is " + prev2Update)
-
-      if (currentUpdate === prev1Update){
-        updated = true;
-      } else {
+      console.log("current is " + currentUpdate + "| prev1 is " + prev1Update +  " | prev2 update is " + prev2Update)
+      if (currentUpdate === prev1Update){ //or prev 1 / prev 2 update 
         updated = false;
+      } else {
+        updated = true;
       }
-
     }
-
-
-
+*/
 
 
 
