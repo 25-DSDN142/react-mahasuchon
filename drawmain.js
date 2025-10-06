@@ -177,7 +177,7 @@ function drawInteraction(faces, hands) {
         xPosIndexTip: indexFingerTipX,
         yPosIndexTip: indexFingerTipY,
         zPosIndexTip: indexFingerTipZ,
-        lifespan: 100
+        lifespan: 50
       });
 
 
@@ -187,36 +187,56 @@ function drawInteraction(faces, hands) {
 //alternate way of limiting frame rate. this limit depends on your device!!!
 
     if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs
-      if (frameCount % 10 === 1){
-          for (let p of locationA) {      //go through each entry in locationA
-          noStroke;
-          strokeWeight(0);
+      if (frameCount % 6 === 1){
+          for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+            let cur = locationA[i];
+            let prev = locationA[i-10];
+            noStroke;
+            strokeWeight(0);
+              
+            fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
             
-          fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
-          
-          rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
-          p.yPosIndexTip -= 2;
-          p.lifespan -= 5;
-          //updated = false;
+            //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
+            cur.yPosIndexTip -= 2;
+            cur.lifespan -= 1;
+            //updated = false;
+
+            if (prev){
+              fill(0,255,0,prev.lifespan)
+              //rect(prev.xPosIndexTip, prev.yPosIndexTip, 100, 100);
+              strokeWeight(5);
+              stroke(255,255,0,cur.lifespan);
+              line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
+            }
         }
       } else {
 
-          for (let p of locationA) {      //go through each entry in locationA
-          noStroke;
-          strokeWeight(0);
+          for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+            let cur = locationA[i];
+            let prev = locationA[i-10];
+            noStroke;
+            strokeWeight(0);
+              
+            fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
             
-          fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
-          
-          rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
+            //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
 
-          //updated = false;
-        
+            //updated = false;
+
+            if (prev){
+              fill(0,255,0,prev.lifespan)
+              //rect(prev.xPosIndexTip, prev.yPosIndexTip, 100, 100);
+              strokeWeight(5);
+              stroke(255,255,0,cur.lifespan);
+              line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
+            }
+        }
+      
       }
-
 
     }
 
-  }
+  
     
  
     if (updated === false){      // every not updated frame this runs. still draws elements on screen even if the points have not been updated
