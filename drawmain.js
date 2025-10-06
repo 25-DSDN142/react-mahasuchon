@@ -2,10 +2,16 @@
 
 
 
-let temp = []; //temp
+
 let oldX;
 let oldX2;
 let tempTimer = 1;
+let delayBetweenFrames = 26;
+
+let locationA = [];
+let locationB = [];
+
+let updated = false;
 
 
 /* load images here */
@@ -28,157 +34,191 @@ function drawInteraction(faces, hands) {
     let indexFingerTipY = hand.index_finger_tip.y;
 
     //who cares. just import everything
+      let wristX = hand.wrist.x;
+      let wristY = hand.wrist.y;
+      let wristZ = hand.wrist.z3D;
 
-      // Wrist
-    let wristX = hand.wrist.x;
-    let wristY = hand.wrist.y;
-    let wristZ = hand.wrist.z3D;
+      // Thumb
+      let thumbCmcX = hand.thumb_cmc.x;
+      let thumbCmcY = hand.thumb_cmc.y;
+      let thumbCmcZ = hand.thumb_cmc.z3D;
 
-    // Thumb
-    let thumbCmcX = hand.thumb_cmc.x;
-    let thumbCmcY = hand.thumb_cmc.y;
-    let thumbCmcZ = hand.thumb_cmc.z3D;
+      let thumbMcpX = hand.thumb_mcp.x;
+      let thumbMcpY = hand.thumb_mcp.y;
+      let thumbMcpZ = hand.thumb_mcp.z3D;
 
-    let thumbMcpX = hand.thumb_mcp.x;
-    let thumbMcpY = hand.thumb_mcp.y;
-    let thumbMcpZ = hand.thumb_mcp.z3D;
+      let thumbIpX = hand.thumb_ip.x;
+      let thumbIpY = hand.thumb_ip.y;
+      let thumbIpZ = hand.thumb_ip.z3D;
 
-    let thumbIpX = hand.thumb_ip.x;
-    let thumbIpY = hand.thumb_ip.y;
-    let thumbIpZ = hand.thumb_ip.z3D;
+      let thumbTipX = hand.thumb_tip.x;
+      let thumbTipY = hand.thumb_tip.y;
+      let thumbTipZ = hand.thumb_tip.z3D;
 
-    let thumbTipX = hand.thumb_tip.x;
-    let thumbTipY = hand.thumb_tip.y;
-    let thumbTipZ = hand.thumb_tip.z3D;
+      // Index finger
+      let indexFingerMcpX = hand.index_finger_mcp.x;
+      let indexFingerMcpY = hand.index_finger_mcp.y;
+      let indexFingerMcpZ = hand.index_finger_mcp.z3D;
 
-    // Index finger
-    let indexFingerMcpX = hand.index_finger_mcp.x;
-    let indexFingerMcpY = hand.index_finger_mcp.y;
-    let indexFingerMcpZ = hand.index_finger_mcp.z3D;
+      let indexFingerPipX = hand.index_finger_pip.x;
+      let indexFingerPipY = hand.index_finger_pip.y;
+      let indexFingerPipZ = hand.index_finger_pip.z3D;
 
-    let indexFingerPipX = hand.index_finger_pip.x;
-    let indexFingerPipY = hand.index_finger_pip.y;
-    let indexFingerPipZ = hand.index_finger_pip.z3D;
-
-    let indexFingerDipX = hand.index_finger_dip.x;
-    let indexFingerDipY = hand.index_finger_dip.y;
-    let indexFingerDipZ = hand.index_finger_dip.z3D;
+      let indexFingerDipX = hand.index_finger_dip.x;
+      let indexFingerDipY = hand.index_finger_dip.y;
+      let indexFingerDipZ = hand.index_finger_dip.z3D;
 
 
-    let indexFingerTipZ = hand.index_finger_tip.z3D;
+      let indexFingerTipZ = hand.index_finger_tip.z3D;
 
-    // Middle finger
-    let middleFingerMcpX = hand.middle_finger_mcp.x;
-    let middleFingerMcpY = hand.middle_finger_mcp.y;
-    let middleFingerMcpZ = hand.middle_finger_mcp.z;
+      // Middle finger
+      let middleFingerMcpX = hand.middle_finger_mcp.x;
+      let middleFingerMcpY = hand.middle_finger_mcp.y;
+      let middleFingerMcpZ = hand.middle_finger_mcp.z;
 
-    let middleFingerPipX = hand.middle_finger_pip.x;
-    let middleFingerPipY = hand.middle_finger_pip.y;
-    let middleFingerPipZ = hand.middle_finger_pip.z;
+      let middleFingerPipX = hand.middle_finger_pip.x;
+      let middleFingerPipY = hand.middle_finger_pip.y;
+      let middleFingerPipZ = hand.middle_finger_pip.z;
 
-    let middleFingerDipX = hand.middle_finger_dip.x;
-    let middleFingerDipY = hand.middle_finger_dip.y;
-    let middleFingerDipZ = hand.middle_finger_dip.z;
+      let middleFingerDipX = hand.middle_finger_dip.x;
+      let middleFingerDipY = hand.middle_finger_dip.y;
+      let middleFingerDipZ = hand.middle_finger_dip.z;
 
-    let middleFingerTipX = hand.middle_finger_tip.x;
-    let middleFingerTipY = hand.middle_finger_tip.y;
-    let middleFingerTipZ = hand.middle_finger_tip.z;
+      let middleFingerTipX = hand.middle_finger_tip.x;
+      let middleFingerTipY = hand.middle_finger_tip.y;
+      let middleFingerTipZ = hand.middle_finger_tip.z;
 
-    // Ring finger
-    let ringFingerMcpX = hand.ring_finger_mcp.x;
-    let ringFingerMcpY = hand.ring_finger_mcp.y;
-    let ringFingerMcpZ = hand.ring_finger_mcp.z;
+      // Ring finger
+      let ringFingerMcpX = hand.ring_finger_mcp.x;
+      let ringFingerMcpY = hand.ring_finger_mcp.y;
+      let ringFingerMcpZ = hand.ring_finger_mcp.z;
 
-    let ringFingerPipX = hand.ring_finger_pip.x;
-    let ringFingerPipY = hand.ring_finger_pip.y;
-    let ringFingerPipZ = hand.ring_finger_pip.z;
+      let ringFingerPipX = hand.ring_finger_pip.x;
+      let ringFingerPipY = hand.ring_finger_pip.y;
+      let ringFingerPipZ = hand.ring_finger_pip.z;
 
-    let ringFingerDipX = hand.ring_finger_dip.x;
-    let ringFingerDipY = hand.ring_finger_dip.y;
-    let ringFingerDipZ = hand.ring_finger_dip.z;
+      let ringFingerDipX = hand.ring_finger_dip.x;
+      let ringFingerDipY = hand.ring_finger_dip.y;
+      let ringFingerDipZ = hand.ring_finger_dip.z;
 
-    let ringFingerTipX = hand.ring_finger_tip.x;
-    let ringFingerTipY = hand.ring_finger_tip.y;
-    let ringFingerTipZ = hand.ring_finger_tip.z;
+      let ringFingerTipX = hand.ring_finger_tip.x;
+      let ringFingerTipY = hand.ring_finger_tip.y;
+      let ringFingerTipZ = hand.ring_finger_tip.z;
 
-    // Pinky finger
-    let pinkyFingerMcpX = hand.pinky_finger_mcp.x;
-    let pinkyFingerMcpY = hand.pinky_finger_mcp.y;
-    let pinkyFingerMcpZ = hand.pinky_finger_mcp.z;
+      // Pinky finger
+      let pinkyFingerMcpX = hand.pinky_finger_mcp.x;
+      let pinkyFingerMcpY = hand.pinky_finger_mcp.y;
+      let pinkyFingerMcpZ = hand.pinky_finger_mcp.z;
 
-    let pinkyFingerPipX = hand.pinky_finger_pip.x;
-    let pinkyFingerPipY = hand.pinky_finger_pip.y;
-    let pinkyFingerPipZ = hand.pinky_finger_pip.z;
+      let pinkyFingerPipX = hand.pinky_finger_pip.x;
+      let pinkyFingerPipY = hand.pinky_finger_pip.y;
+      let pinkyFingerPipZ = hand.pinky_finger_pip.z;
 
-    let pinkyFingerDipX = hand.pinky_finger_dip.x;
-    let pinkyFingerDipY = hand.pinky_finger_dip.y;
-    let pinkyFingerDipZ = hand.pinky_finger_dip.z;
+      let pinkyFingerDipX = hand.pinky_finger_dip.x;
+      let pinkyFingerDipY = hand.pinky_finger_dip.y;
+      let pinkyFingerDipZ = hand.pinky_finger_dip.z;
 
-    let pinkyFingerTipX = hand.pinky_finger_tip.x;
-    let pinkyFingerTipY = hand.pinky_finger_tip.y;
-    let pinkyFingerTipZ = hand.pinky_finger_tip.z;
+      let pinkyFingerTipX = hand.pinky_finger_tip.x;
+      let pinkyFingerTipY = hand.pinky_finger_tip.y;
+      let pinkyFingerTipZ = hand.pinky_finger_tip.z;
 
-    //  let pinkyFingerTipX = hand.pinky_finger_tip.x;
-    //  let pinkyFingerTipY = hand.pinky_finger_tip.y;
+      //  let pinkyFingerTipX = hand.pinky_finger_tip.x;
+      //  let pinkyFingerTipY = hand.pinky_finger_tip.y;
 
     /*
     Start drawing on the hands here
     */
-
-  
     
-    if (tempTimer < 25){
+    
+
+    //let delayBetweenFrames = 26; //THIS MUST BE AN EVEN NUMBER!!!!!!!!!!!!
+    
+    /*if (tempTimer < delayBetweenFrames){ 
       tempTimer ++;
     } else {
       tempTimer = 0;
-    }
+    }*/
 
-
-    if (tempTimer === 24){
+    /*if (tempTimer === (delayBetweenFrames-1)){
           temp.push({
             xPos: indexFingerTipX,
             yPos: indexFingerTipY,
-            zPos: indexFingerTipZ
+            zPos: indexFingerTipZhh
           });
+    }*/
+
+    locationA.push({
+      xPosIndexTip: indexFingerTipX,
+      yPosIndexTip: indexFingerTipY,
+      zPosIndexTip: indexFingerTipZ,
+      lifespan: 50
+    });
+
+    
+
+    if (updated === false){     //i think this runs twice for some reason? why?
+      for (let p of locationA) {      //go through each entry in locationA
+        noStroke;
+        strokeWeight(0);
+          
+        fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
+        
+        rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
+        p.yPosIndexTip -= 10;
+        p.lifespan -= 20
+        updated = false;
+      }
+    }
+
+    if (updated === true){
+      for (let p of locationA) {      //go through each entry in locationA
+        noStroke;
+        strokeWeight(0);
+
+        fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
+        
+        rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
+
+      }
     }
 
 
-  for (let p of temp) {
-    rect(p.xPos, p.yPos, 50, 50);
-    p.yPos -= 2;
-  }
-
-  if (temp.length > 100) {
-    temp.shift();
-  }
 
 
 
-    oldX = indexFingerTipX;
+    if (locationA.length > 100) {   //limit of 100 entries
+      locationA.shift();
+    }
 
-    oldX2 = oldX;
-
-    /*
-
-    so, it draws the left hand then draws the right hand. so, i need two oldX variables. what if it draws only one hand? i need to compare both current X with oldX and oldX2, to see when the variables arent being updated.
-
-    */
-
-
-
-
-    fill(225, 225, 0);
-    ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
-    ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
+    //fill(225, 225, 0);
+    //ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
+    //ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
     text(frameCount,255,255)
     text(tempTimer,255,355)
+
+    for (i = 2; i < locationA.length;i++){
+      let currentUpdate = locationA[i].xPosIndexTip;
+
+      let prev1Update = locationA[i-1].xPosIndexTip;
+      let prev2Update = locationA[i-2].xPosIndexTip;
+
+      console.log("current update is " + currentUpdate + "prev 2 update is " + prev2Update)
+
+      if (currentUpdate === prev1Update){
+        updated = true;
+      } else {
+        updated = false;
+      }
+
+    }
+
 
 
 
 
 
     /*strokeWeight(0)
-    for (i=1;i<76;i++){
+    for (i=1;i<76;i++){ //old "bar" style
       console.log(pinkyFingerTipY)
 
       fill(i*3+((pinkyFingerTipY/768)*255))
@@ -188,7 +228,6 @@ function drawInteraction(faces, hands) {
     }
     fill((pinkyFingerDipY/768)*255)
     rect(0,pinkyFingerTipY,1920,50)
-
 
     */
 
@@ -239,10 +278,6 @@ function ghostSelf(){
   ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
   pop();
 }
-
-
-
-
 
 
 function fingerPuppet(x, y) {
