@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Ask for the commit message
-read -p "Enter your commit message: " commit_message
+read -p "enter your commit msg: " commit_message
 
-# Make sure something was entered
+# something was entered?
+
 if [ -z "$commit_message" ]; then
-    echo "No commit message entered. Exiting."
+    echo "no commit detected"
     exit 1
 fi
 
-# Run git commands
+
 git add .
 git commit -m "$commit_message"
 git push
 
-# Pause so you can see the output before the terminal closes
-read -p "Press Enter to close..."
+
+read -p "done, press enter to close"
