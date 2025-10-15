@@ -23,6 +23,8 @@ function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
 }
 
+
+
 function drawInteraction(faces, hands) {
   // hands part
   // for loop to capture if there is more than one hand on the screen. This applies the same process to all hands.
@@ -177,7 +179,7 @@ function drawInteraction(faces, hands) {
         xPosIndexTip: indexFingerTipX,
         yPosIndexTip: indexFingerTipY,
         zPosIndexTip: indexFingerTipZ,
-        lifespan: 50
+        lifespan: 250
       });
 
 
@@ -186,50 +188,50 @@ function drawInteraction(faces, hands) {
 
 //alternate way of limiting frame rate. this limit depends on your device!!!
 
-    if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs
-      if (frameCount % 6 === 1){
+function drawTrail(prev,cur) {                     //draws the trail
+  if (prev){
+    fill(0,255,0,5*prev.lifespan)
+    //rect(prev.xPosIndexTip, prev.yPosIndexTip, 100, 100);
+    strokeWeight(20);
+    stroke(255,255,0,cur.lifespan);
+    line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
+  }
+}
+
+    if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs. 
+      if (frameCount % 3 === 1){  // every 6 frames, run this once
           for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
             let cur = locationA[i];
-            let prev = locationA[i-10];
-            noStroke;
-            strokeWeight(0);
+            let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+            //noStroke;
+            //strokeWeight(0);
               
-            fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
+            //fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
             
             //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
             cur.yPosIndexTip -= 2;
-            cur.lifespan -= 1;
+            cur.lifespan -= 10;
             //updated = false;
 
-            if (prev){
-              fill(0,255,0,prev.lifespan)
-              //rect(prev.xPosIndexTip, prev.yPosIndexTip, 100, 100);
-              strokeWeight(5);
-              stroke(255,255,0,cur.lifespan);
-              line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
-            }
+            drawTrail(prev,cur)
         }
       } else {
 
           for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
             let cur = locationA[i];
             let prev = locationA[i-10];
-            noStroke;
-            strokeWeight(0);
+            //noStroke;
+            //strokeWeight(0);
               
-            fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
+            //fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
             
             //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
+            //cur.yPosIndexTip -= 2;
+            cur.lifespan -= 10;
 
             //updated = false;
 
-            if (prev){
-              fill(0,255,0,prev.lifespan)
-              //rect(prev.xPosIndexTip, prev.yPosIndexTip, 100, 100);
-              strokeWeight(5);
-              stroke(255,255,0,cur.lifespan);
-              line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
-            }
+            drawTrail(prev,cur)
         }
       
       }
