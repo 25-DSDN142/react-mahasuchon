@@ -176,7 +176,7 @@ function drawInteraction(faces, hands) {
 
 
 
-
+/*
       locationA.push({
         xPosIndexTip: indexFingerTipX,
         yPosIndexTip: indexFingerTipY,
@@ -184,8 +184,55 @@ function drawInteraction(faces, hands) {
         lifespan: 255
       });
 
-
+*/
     updated = true
+    
+
+    if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs. 
+      if (frameCount % 6 === 1){  // every 6 frames, run this once
+        locationA.push({
+          xPosIndexTip: indexFingerTipX,
+          yPosIndexTip: indexFingerTipY,
+          zPosIndexTip: indexFingerTipZ,
+          lifespan: 255
+        });
+
+        for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+            let cur = locationA[i];
+            let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+
+            rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
+
+            //cur.yPosIndexTip -= 5
+        }
+
+
+        
+      } else 
+        {
+
+        for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+            let cur = locationA[i];
+            let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+
+            rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
+
+            cur.yPosIndexTip -= 5
+        }
+
+
+
+
+        
+      
+      }
+
+    }
+
+
+
+
+    /*
 
     
 
@@ -250,7 +297,7 @@ function drawTrail(prev,cur) {                     //draws the trail
     if (locationA.length > 0) {
       image(darkFade,indexFingerTipX,indexFingerTipY)       
     }
-    imageMode(CORNER)
+    imageMode(CORNER)*/
 
 
   
