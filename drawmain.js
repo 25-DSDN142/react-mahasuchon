@@ -18,9 +18,11 @@ let locationB = [];
 let updated = false;
 
 
+
 /* load images here */
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
+  darkFade = loadImage("darkness.png")
 }
 
 
@@ -185,6 +187,8 @@ function drawInteraction(faces, hands) {
 
     updated = true
 
+    
+
 
 //alternate way of limiting frame rate. this limit depends on your device!!!
 
@@ -195,6 +199,9 @@ function drawTrail(prev,cur) {                     //draws the trail
     strokeWeight(20);
     stroke(255,200+(cur.lifespan*-1),0,cur.lifespan);
     line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
+    
+
+    
   }
 }
 
@@ -212,6 +219,8 @@ function drawTrail(prev,cur) {                     //draws the trail
             cur.yPosIndexTip -= 2;
             cur.lifespan -= 25;
             //updated = false;
+
+            
 
             drawTrail(prev,cur)
         }
@@ -237,6 +246,12 @@ function drawTrail(prev,cur) {                     //draws the trail
       }
 
     }
+    imageMode(CENTER);
+    if (locationA.length > 0) {
+      image(darkFade,indexFingerTipX,indexFingerTipY)       
+    }
+    imageMode(CORNER)
+
 
   
     
