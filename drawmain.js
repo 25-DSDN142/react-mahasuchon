@@ -179,7 +179,7 @@ function drawInteraction(faces, hands) {
         xPosIndexTip: indexFingerTipX,
         yPosIndexTip: indexFingerTipY,
         zPosIndexTip: indexFingerTipZ,
-        lifespan: 250
+        lifespan: 255
       });
 
 
@@ -190,10 +190,10 @@ function drawInteraction(faces, hands) {
 
 function drawTrail(prev,cur) {                     //draws the trail
   if (prev){
-    fill(0,255,0,5*prev.lifespan)
+    //fill(0,255,0,5*prev.lifespan)
     //rect(prev.xPosIndexTip, prev.yPosIndexTip, 100, 100);
     strokeWeight(20);
-    stroke(255,255,0,cur.lifespan);
+    stroke(255,200+(cur.lifespan*-1),0,cur.lifespan);
     line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
   }
 }
@@ -210,7 +210,7 @@ function drawTrail(prev,cur) {                     //draws the trail
             
             //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
             cur.yPosIndexTip -= 2;
-            cur.lifespan -= 10;
+            cur.lifespan -= 25;
             //updated = false;
 
             drawTrail(prev,cur)
@@ -227,7 +227,7 @@ function drawTrail(prev,cur) {                     //draws the trail
             
             //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
             //cur.yPosIndexTip -= 2;
-            cur.lifespan -= 10;
+            //cur.lifespan -= 25;
 
             //updated = false;
 
