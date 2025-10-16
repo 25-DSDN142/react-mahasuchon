@@ -30,6 +30,10 @@ function prepareInteraction() {
 function drawInteraction(faces, hands) {
   // hands part
   // for loop to capture if there is more than one hand on the screen. This applies the same process to all hands.
+
+  oncePerFrame = true;
+
+
   for (let i = 0; i < hands.length; i++) {
     let hand = hands[i];
     //console.log(hand);
@@ -155,59 +159,100 @@ function drawInteraction(faces, hands) {
           });
     }*/
 
-/*
-    if (handswitch === 1){
-      locationA.push({
-        xPosIndexTip: indexFingerTipX,
-        yPosIndexTip: indexFingerTipY,
-        zPosIndexTip: indexFingerTipZ,
-        lifespan: 100
-      });
-      handswitch = 2
-    } else if (handswitch = 2) {
-      locationB.push({
-        xPosIndexTip: indexFingerTipX,
-        yPosIndexTip: indexFingerTipY,
-        zPosIndexTip: indexFingerTipZ,
-        lifespan: 100
-      });
-      handswitch = 1
-    }*/
+    /*
+        if (handswitch === 1){
+          locationA.push({
+            xPosIndexTip: indexFingerTipX,
+            yPosIndexTip: indexFingerTipY,
+            zPosIndexTip: indexFingerTipZ,
+            lifespan: 100
+          });
+          handswitch = 2
+        } else if (handswitch = 2) {
+          locationB.push({
+            xPosIndexTip: indexFingerTipX,
+            yPosIndexTip: indexFingerTipY,
+            zPosIndexTip: indexFingerTipZ,
+            lifespan: 100
+          });
+          handswitch = 1
+        }*/
 
 
 
-/*
-      locationA.push({
-        xPosIndexTip: indexFingerTipX,
-        yPosIndexTip: indexFingerTipY,
-        zPosIndexTip: indexFingerTipZ,
-        lifespan: 255
-      });
+    /*
+          locationA.push({
+            xPosIndexTip: indexFingerTipX,
+            yPosIndexTip: indexFingerTipY,
+            zPosIndexTip: indexFingerTipZ,
+            lifespan: 255
+          });
 
-*/
+    */
+
+
+
+
+function drawAll(cur,prev){
+  //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
+  
+  stroke(10)
+
+  line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
+
+  line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
+}
+
+
+
     updated = true
     
-
     if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs. 
-      if (frameCount % 6 === 1){  // every 6 frames, run this once
+      if (frameCount % 15 === 1){  // every 6 frames, run this once
         locationA.push({
           xPosIndexTip: indexFingerTipX,
           yPosIndexTip: indexFingerTipY,
           zPosIndexTip: indexFingerTipZ,
-          lifespan: 255
+          lifespan: 255,
+
+          xPosThumbMcp: thumbMcpX,
+          yPosThumbMcp: thumbMcpY,
+          zPosThumbMcp: thumbMcpZ,
+
+          xPosThumbTip: thumbTipX,
+          yPosThumbTip: thumbTipY,
+          zPosThumbTip: thumbTipZ,
+
         });
 
         for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
             let cur = locationA[i];
             let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
 
-            rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
+            drawAll(cur,prev)
 
-            //cur.yPosIndexTip -= 5
+
+
+
+            rect(thumbMcpX,thumbMcpY,50,50)
+
+          /*
+            if (oncePerFrame === true){
+              cur.yPosIndexTip -= 5
+              cur.yPosThumbMcp -= 5
+              cur.yPosThumbTip -= 5
+
+              oncePerFrame = false;
+            }
+
+            /*if (particleFxRan = false){
+              cur.yPosIndexTip -= 5
+              particleFxRan = true
+            }
+*/
+
         }
 
-
-        
       } else 
         {
 
@@ -215,29 +260,26 @@ function drawInteraction(faces, hands) {
             let cur = locationA[i];
             let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
 
-            rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
+            drawAll(cur,prev)
+            /*
 
-            cur.yPosIndexTip -= 5
+            if (oncePerFrame === true){
+              cur.yPosIndexTip -= 5
+              cur.yPosThumbMcp -= 5
+              cur.yPosThumbTip -= 5
+
+              oncePerFrame = false;
+            }*/
+
         }
 
-
-
-
-        
-      
       }
 
     }
 
-
-
-
     /*
 
-    
-
-
-//alternate way of limiting frame rate. this limit depends on your device!!!
+//alternate way of limting frame rate. this limit depends on your device!!!
 
 function drawTrail(prev,cur) {                     //draws the trail
   if (prev){
@@ -315,23 +357,19 @@ function drawTrail(prev,cur) {                     //draws the trail
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    if (locationA.length > 100) {   //limit of 100 entries
+    if (locationA.length > 500) {   //limit entries
       locationA.shift();
     }
+
+    for (let i = 0; i < locationA.length; i++) {
+      let cur = locationA[i];
+          
+      cur.yPosIndexTip -= 5;
+      cur.yPosThumbMcp -= 5;
+      cur.yPosThumbTip -= 5;
+    }
+
+
 
 
 
@@ -361,9 +399,6 @@ function drawTrail(prev,cur) {                     //draws the trail
       }
     }
 */
-
-
-
     /*strokeWeight(0)
     for (i=1;i<76;i++){ //old "bar" style
       console.log(pinkyFingerTipY)
@@ -392,28 +427,18 @@ function drawTrail(prev,cur) {                     //draws the trail
   }
   // You can make addtional elements here, but keep the hand drawing inside the for loop. 
   //------------------------------------------------------
+
+      for (let i = 0; i < locationA.length; i++) {
+      let cur = locationA[i];
+          
+      cur.yPosIndexTip -= 5;
+      cur.yPosThumbMcp -= 5;
+      cur.yPosThumbTip -= 5;
+    }
+
+
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -434,7 +459,6 @@ function fingerPuppet(x, y) {
 
   fill(255, 252, 48) // yellow
   ellipse(x, y, 20) // draw center 
-
 }
 
 
