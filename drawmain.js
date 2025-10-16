@@ -45,7 +45,7 @@ function drawInteraction(faces, hands) {
     let indexFingerTipX = hand.index_finger_tip.x;
     let indexFingerTipY = hand.index_finger_tip.y;
 
-    //who cares. just import everything
+    //import everything for development
       let wristX = hand.wrist.x;
       let wristY = hand.wrist.y;
       let wristZ = hand.wrist.z3D;
@@ -137,62 +137,6 @@ function drawInteraction(faces, hands) {
       //  let pinkyFingerTipX = hand.pinky_finger_tip.x;
       //  let pinkyFingerTipY = hand.pinky_finger_tip.y;
 
-    /*
-    Start drawing on the hands here
-    */
-    
-    
-
-    //let delayBetweenFrames = 26; //THIS MUST BE AN EVEN NUMBER!!!!!!!!!!!!
-    
-    /*if (tempTimer < delayBetweenFrames){ 
-      tempTimer ++;
-    } else {
-      tempTimer = 0;
-    }*/
-
-    /*if (tempTimer === (delayBetweenFrames-1)){
-          temp.push({
-            xPos: indexFingerTipX,
-            yPos: indexFingerTipY,
-            zPos: indexFingerTipZhh
-          });
-    }*/
-
-    /*
-        if (handswitch === 1){
-          locationA.push({
-            xPosIndexTip: indexFingerTipX,
-            yPosIndexTip: indexFingerTipY,
-            zPosIndexTip: indexFingerTipZ,
-            lifespan: 100
-          });
-          handswitch = 2
-        } else if (handswitch = 2) {
-          locationB.push({
-            xPosIndexTip: indexFingerTipX,
-            yPosIndexTip: indexFingerTipY,
-            zPosIndexTip: indexFingerTipZ,
-            lifespan: 100
-          });
-          handswitch = 1
-        }*/
-
-
-
-    /*
-          locationA.push({
-            xPosIndexTip: indexFingerTipX,
-            yPosIndexTip: indexFingerTipY,
-            zPosIndexTip: indexFingerTipZ,
-            lifespan: 255
-          });
-
-    */
-
-
-
-
 function drawAll(cur,prev){
   //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
   
@@ -236,20 +180,6 @@ function drawAll(cur,prev){
 
             rect(thumbMcpX,thumbMcpY,50,50)
 
-          /*
-            if (oncePerFrame === true){
-              cur.yPosIndexTip -= 5
-              cur.yPosThumbMcp -= 5
-              cur.yPosThumbTip -= 5
-
-              oncePerFrame = false;
-            }
-
-            /*if (particleFxRan = false){
-              cur.yPosIndexTip -= 5
-              particleFxRan = true
-            }
-*/
 
         }
 
@@ -261,15 +191,7 @@ function drawAll(cur,prev){
             let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
 
             drawAll(cur,prev)
-            /*
 
-            if (oncePerFrame === true){
-              cur.yPosIndexTip -= 5
-              cur.yPosThumbMcp -= 5
-              cur.yPosThumbTip -= 5
-
-              oncePerFrame = false;
-            }*/
 
         }
 
@@ -278,140 +200,6 @@ function drawAll(cur,prev){
     }
 
     /*
-
-//alternate way of limting frame rate. this limit depends on your device!!!
-
-function drawTrail(prev,cur) {                     //draws the trail
-  if (prev){
-    //fill(0,255,0,5*prev.lifespan)
-    //rect(prev.xPosIndexTip, prev.yPosIndexTip, 100, 100);
-    strokeWeight(20);
-    stroke(255,200+(cur.lifespan*-1),0,cur.lifespan);
-    line(prev.xPosIndexTip, prev.yPosIndexTip, cur.xPosIndexTip, cur.yPosIndexTip)
-    
-
-    
-  }
-}
-
-    if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs. 
-      if (frameCount % 3 === 1){  // every 6 frames, run this once
-          for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
-            let cur = locationA[i];
-            let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
-            //noStroke;
-            //strokeWeight(0);
-              
-            //fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
-            
-            //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
-            cur.yPosIndexTip -= 2;
-            cur.lifespan -= 25;
-            //updated = false;
-
-            
-
-            drawTrail(prev,cur)
-        }
-      } else {
-
-          for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
-            let cur = locationA[i];
-            let prev = locationA[i-10];
-            //noStroke;
-            //strokeWeight(0);
-              
-            //fill(255,255,255,cur.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
-            
-            //rect(cur.xPosIndexTip, cur.yPosIndexTip, 50, 50);
-            //cur.yPosIndexTip -= 2;
-            //cur.lifespan -= 25;
-
-            //updated = false;
-
-            drawTrail(prev,cur)
-        }
-      
-      }
-
-    }
-    imageMode(CENTER);
-    if (locationA.length > 0) {
-      image(darkFade,indexFingerTipX,indexFingerTipY)       
-    }
-    imageMode(CORNER)*/
-
-
-  
-    
- 
-    if (updated === false){      // every not updated frame this runs. still draws elements on screen even if the points have not been updated
-      for (let p of locationA) {      //go through each entry in locationA
-        noStroke;
-        strokeWeight(0);
-
-        fill(255,255,255,p.lifespan)  //change colour to white, p.lifespan accesses lifespan in each entry
-        
-        rect(p.xPosIndexTip, p.yPosIndexTip, 50, 50);
-      }
-    }
-
-
-    if (locationA.length > 500) {   //limit entries
-      locationA.shift();
-    }
-
-    for (let i = 0; i < locationA.length; i++) {
-      let cur = locationA[i];
-          
-      cur.yPosIndexTip -= 5;
-      cur.yPosThumbMcp -= 5;
-      cur.yPosThumbTip -= 5;
-    }
-
-
-
-
-
-    //fill(225, 225, 0);
-    //ellipse(indexFingerTipX, indexFingerTipY, 30, 30);
-    //ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
-    //text(frameCount,255,255)
-    //text(tempTimer,255,355)
-
-    /*Because of how the points dont instantly update, this is a solution i've come up with.
-
-    checks current update's position from array, then checks position from however many updates ago. if they are the same, you know the points havent been updated yet.
-    
-    unfortunately this results in a very low frame rate output*/
-
-    /*
-    for (i = 2; i < locationA.length;i++){
-      let currentUpdate = locationA[i].xPosIndexTip;
-      let prev1Update = locationA[i-1].xPosIndexTip;
-      let prev2Update = locationA[i-2].xPosIndexTip;
-
-      console.log("current is " + currentUpdate + "| prev1 is " + prev1Update +  " | prev2 update is " + prev2Update)
-      if (currentUpdate === prev1Update){ //or prev 1 / prev 2 update 
-        updated = false;
-      } else {
-        updated = true;
-      }
-    }
-*/
-    /*strokeWeight(0)
-    for (i=1;i<76;i++){ //old "bar" style
-      console.log(pinkyFingerTipY)
-
-      fill(i*3+((pinkyFingerTipY/768)*255))
-      
-      console.log((-i*2)*(pinkyFingerTipY/700)+700)
-      rect(0,(10*-i)+768,1920,5)
-    }
-    fill((pinkyFingerDipY/768)*255)
-    rect(0,pinkyFingerTipY,1920,50)
-
-    */
 
     //rect(thumbTipX,thumbTipY,50,50);
 
@@ -435,8 +223,6 @@ function drawTrail(prev,cur) {                     //draws the trail
       cur.yPosThumbMcp -= 5;
       cur.yPosThumbTip -= 5;
     }
-
-
     
 }
 
