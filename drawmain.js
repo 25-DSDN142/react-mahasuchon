@@ -256,7 +256,7 @@
 
 
 
-  /*if (frameCount % 15 === 1){
+  if (frameCount % 15 === 1){
     locationB.push({
     xLeftBottom: 0,
     yLeftBottom: canvasHeight,
@@ -264,7 +264,8 @@
     xRightBottom: canvasWidth,
     yRightBottom: canvasHeight
 
-  });*/
+  });
+  }
 
 
 
@@ -298,7 +299,7 @@
     }
 
 
-    /*for (let i = 0; i < locationB.length; i++) {
+    for (let i = 0; i < locationB.length; i++) {
       let cur = locationB[i];
 
       //if yposindextip is on the bottom half of the screen
@@ -320,7 +321,7 @@
 
       canvasHeight;
       canvasWidth;
-    }*/
+    }
 
 
 
@@ -340,15 +341,14 @@
 
 
 
-    /*for (let i=0;i<locationB.length;i++) {      //go through each entry in locationB
+    for (let i=0;i<locationB.length;i++) {      //go through each entry in locationB
 
           let cur = locationB[i];
           let prev = locationB[i-10];               //change this value to change which past value that the trail goes to
 
 
           drawAllB(cur,prev)
-      }*/
-
+      }
 
 
 
