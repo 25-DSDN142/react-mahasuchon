@@ -43,46 +43,35 @@
 
     //dynamic stuff (affected by user)
     
-  /*
-    strokeWeight(20)
-
-    stroke(0)
-
-    line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
-
-    line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)*/
-
     if (cur.lifespan > 1){
-      strokeWeight(cur.lifespan)
+      strokeWeight(cur.lifespan*0.5)
     } else {
       strokeWeight(1)
     }
 
 
-    stroke(cur.lifespan*25.5,0,255)
+    stroke(350-(cur.lifespan*25.5),0,255)
 
     line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
 
     line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
 
-    cur.lifespan -= (1/25.5);
+    cur.lifespan -= (1/30);
 
   }
 
 
   function drawAllB(cur,prev){
-    //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
-
-
+    
     //env stuff! (unaffected stuff, but not moving, ON THE GROUND
 
     if (cur.lifespanB > 1){
-      strokeWeight(cur.lifespanB)
+      strokeWeight(cur.lifespanB*0.5)
     } else {
       strokeWeight(1)
     }
 
-    stroke(cur.lifespanB*25.5,0,255)
+    stroke(350-(cur.lifespanB*25.5),0,255)
 
     line(cur.xLeftBottom, cur.yLeftBottom, cur.xRightBottom, cur.yLeftBottom)
     
@@ -90,21 +79,17 @@
 
   }
 
-
-
   function drawAllC(cur,prev){
-    //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
-
 
     //env stuff! (unaffected stuff, but not moving, IN THE SMKY
 
     if (cur.lifespanC > 1){
-      strokeWeight(cur.lifespanC)
+      strokeWeight(2*cur.lifespanC)
     } else {
       strokeWeight(1)
     }
 
-    stroke(cur.lifespanC*25.5,0,255)
+    stroke(300-(cur.lifespanC*25.5),0,255,cur.lifespanC*20)
 
     line(cur.xLeftCenter, cur.yLeftCenter, cur.xCenterTop, cur.yCenterTop)
 
@@ -116,6 +101,8 @@
   }
 
   
+
+
 
 
 
@@ -321,18 +308,33 @@
 
     if (frameCount % (spawnRate*2) === 1){ 
     locationC.push({
-    xLeftCenter: 0,
-    yLeftCenter: canvasHeight/2,
+      /*
+      
+      xLeftCenter: 0 + (canvasWidth * -0.5),
+      yLeftCenter: (canvasHeight/3)*2,
 
-    xCenterTop: canvasWidth/2,
-    yCenterTop: 0,
+      xCenterTop: canvasWidth/2,
+      yCenterTop: 0 + (canvasHeight*-0.5),
 
-    xRightCenter: canvasWidth,
-    yRightCenter: canvasHeight/2,
+      xRightCenter: canvasWidth + (canvasWidth * 0.5),
+      yRightCenter: (canvasHeight/3) * 2,
 
-    lifespanC: 10
+      lifespanC: 10
 
-  });
+      */
+
+      xLeftCenter: 0 + (canvasWidth * -1),
+      yLeftCenter: (canvasHeight/3)*2.5,
+
+      xCenterTop: canvasWidth/2,
+      yCenterTop: 0 + (canvasHeight*-1),
+
+      xRightCenter: canvasWidth + (canvasWidth * 1),
+      yRightCenter: (canvasHeight/3) * 2.5,
+
+      lifespanC: 10
+
+    });
   }
 
 
