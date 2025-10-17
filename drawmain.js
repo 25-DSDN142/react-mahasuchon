@@ -5,11 +5,11 @@
   canvasWidth = 1280;
   canvasHeight = 920;
 
-  let locationA = [];
+  let locationA = [];  // array of the hands
 
-  let locationB = [];
+  let locationB = [];  // array of the ground lines
 
-  let locationC = [];
+  let locationC = [];  //array of the sky lines
 
   let updated = false;
 
