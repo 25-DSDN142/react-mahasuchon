@@ -22,7 +22,9 @@
 
   alreadyUpdated = false;
 
-  let timeFactor = 1; //max and default is 1. changes how fast the lines move
+  let timeFactor = 0.99 ; //the closer to 1 this is, the slower the lines will move.
+
+  spawnRate = 15; //in frames
 
 
   /* load images here */
@@ -48,7 +50,13 @@
 
     line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)*/
 
-    strokeWeight(cur.lifespan)
+    if (cur.lifespan > 1){
+      strokeWeight(cur.lifespan)
+    } else {
+      strokeWeight(0)
+    }
+
+
 
     stroke(cur.lifespan*25.5,0,255)
 
@@ -66,13 +74,18 @@
 
 
     //env stuff! (unaffected stuff, but not moving)
-    strokeWeight(cur.lifespanB)
+
+    if (cur.lifespanB > 0){
+      strokeWeight(cur.lifespanB)
+    } else {
+      strokeWeight(0)
+    }
 
     stroke(cur.lifespanB*25.5,0,255)
 
     line(cur.xLeftBottom, cur.yLeftBottom, cur.xRightBottom, cur.yLeftBottom)
     
-    cur.lifespanB -= 1/25.5;
+    cur.lifespanB -= 1/30;
 
   }
 
@@ -203,7 +216,7 @@
   updated = true
 
   if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs. 
-    if (frameCount % 15 === 1){  // every 6 frames, run this once
+    if (frameCount % spawnRate === 1){  // every 6 frames, run this once
       locationA.push({
         xPosIndexTip: indexFingerTipX,
         yPosIndexTip: indexFingerTipY,
@@ -262,7 +275,7 @@
 
 
 
-  if (frameCount % 15 === 1){
+  if (frameCount % spawnRate === 1){ //push this at every 15 frames, no matter what
     locationB.push({
     xLeftBottom: 0,
     yLeftBottom: canvasHeight,
@@ -285,18 +298,18 @@
 
       //if yposindextip is on the bottom half of the screen
 
-      cur.yPosIndexTip = ((cur.yPosIndexTip - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+      cur.yPosIndexTip = ((cur.yPosIndexTip - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
 
-      cur.yPosThumbMcp = ((cur.yPosThumbMcp - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+      cur.yPosThumbMcp = ((cur.yPosThumbMcp - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
 
-      cur.yPosThumbTip = ((cur.yPosThumbTip - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+      cur.yPosThumbTip = ((cur.yPosThumbTip - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
 
 
-      cur.xPosIndexTip = ((cur.xPosIndexTip - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+      cur.xPosIndexTip = ((cur.xPosIndexTip - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
 
-      cur.xPosThumbMcp = ((cur.xPosThumbMcp - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+      cur.xPosThumbMcp = ((cur.xPosThumbMcp - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
 
-      cur.xPosThumbTip = ((cur.xPosThumbTip - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+      cur.xPosThumbTip = ((cur.xPosThumbTip - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
 
       //cur.yPosIndexTip -= 5;
       //cur.yPosThumbMcp -= 5;
@@ -312,14 +325,14 @@
 
       //if yposindextip is on the bottom half of the screen
 
-      cur.yLeftBottom = ((cur.yLeftBottom - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+      cur.yLeftBottom = ((cur.yLeftBottom - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
 
-      cur.yRightBottom = ((cur.yRightBottom - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+      cur.yRightBottom = ((cur.yRightBottom - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
 
 
-      cur.xLeftBottom = ((cur.xLeftBottom - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+      cur.xLeftBottom = ((cur.xLeftBottom - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
 
-      cur.xRightBottom = ((cur.xRightBottom - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+      cur.xRightBottom = ((cur.xRightBottom - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
 
 
 
@@ -362,8 +375,13 @@
 
 
 
-      if (locationA.length > 10) {   //limit of 100 entries
+      if (locationA.length > 50) {   //limit of 100 entries
         locationA.shift();
+      }
+      
+
+      if (locationB.length > 20) {   //limit of 100 entries
+        locationB.shift();
       }
 
 
