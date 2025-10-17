@@ -17,6 +17,8 @@ let locationB = [];
 
 let updated = false;
 
+alreadyUpdated = false;
+
 
 
 /* load images here */
@@ -149,81 +151,69 @@ function drawAll(cur,prev){
 
 
 
-    updated = true
-    
-    if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs. 
-      if (frameCount % 15 === 1){  // every 6 frames, run this once
-        locationA.push({
-          xPosIndexTip: indexFingerTipX,
-          yPosIndexTip: indexFingerTipY,
-          zPosIndexTip: indexFingerTipZ,
-          lifespan: 255,
+updated = true
 
-          xPosThumbMcp: thumbMcpX,
-          yPosThumbMcp: thumbMcpY,
-          zPosThumbMcp: thumbMcpZ,
+if (updated === true){     // if the points have been updated, run this. basically, every updated frame this runs. 
+  if (frameCount % 15 === 1){  // every 6 frames, run this once
+    locationA.push({
+      xPosIndexTip: indexFingerTipX,
+      yPosIndexTip: indexFingerTipY,
+      zPosIndexTip: indexFingerTipZ,
+      lifespan: 255,
 
-          xPosThumbTip: thumbTipX,
-          yPosThumbTip: thumbTipY,
-          zPosThumbTip: thumbTipZ,
+      xPosThumbMcp: thumbMcpX,
+      yPosThumbMcp: thumbMcpY,
+      zPosThumbMcp: thumbMcpZ,
 
-        });
+      xPosThumbTip: thumbTipX,
+      yPosThumbTip: thumbTipY,
+      zPosThumbTip: thumbTipZ,
 
-        for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
-            let cur = locationA[i];
-            let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+    });
 
-            drawAll(cur,prev)
-
-
-
-
-            rect(thumbMcpX,thumbMcpY,50,50)
-
-
-        }
-
-      } else 
-        {
-
-        for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
-            let cur = locationA[i];
-            let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
-
-            drawAll(cur,prev)
-
-
-        }
-
-      }
-
+    for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+        let cur = locationA[i];
+        let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+        drawAll(cur,prev)
+        rect(thumbMcpX,thumbMcpY,50,50)
     }
 
-    /*
+  } else 
+    {
 
-    //rect(thumbTipX,thumbTipY,50,50);
-
-    // drawPoints(hand)
-
-    //fingerPuppet(indexFingerTipX, indexFingerTipY);
-
-    //chameleonHandPuppet(hand)
-
-    /*
-    Stop drawing on the hands here
-    */
+    for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+        let cur = locationA[i];
+        let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+        drawAll(cur,prev)
+    }
   }
-  // You can make addtional elements here, but keep the hand drawing inside the for loop. 
-  //------------------------------------------------------
+}
 
-      for (let i = 0; i < locationA.length; i++) {
-      let cur = locationA[i];
-          
-      cur.yPosIndexTip -= 5;
-      cur.yPosThumbMcp -= 5;
-      cur.yPosThumbTip -= 5;
-    }
-    
+/*
+
+//rect(thumbTipX,thumbTipY,50,50);
+
+// drawPoints(hand)
+
+//fingerPuppet(indexFingerTipX, indexFingerTipY);
+
+//chameleonHandPuppet(hand)
+
+/*
+Stop drawing on the hands here
+*/
+}
+// You can make addtional elements here, but keep the hand drawing inside the for loop. 
+//------------------------------------------------------
+
+  for (let i = 0; i < locationA.length; i++) {
+  let cur = locationA[i];
+      
+  cur.yPosIndexTip -= 5;
+  cur.yPosThumbMcp -= 5;
+  cur.yPosThumbTip -= 5;
+}
+
 }
 
 
