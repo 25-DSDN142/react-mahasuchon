@@ -18,13 +18,15 @@
 
   let locationB = [];
 
+  let locationC = [];
+
   let updated = false;
 
   alreadyUpdated = false;
 
   let timeFactor = 0.99 ; //the closer to 1 this is, the slower the lines will move.
 
-  spawnRate = 15; //in frames
+  spawnRate = 30; //once every X frames
 
 
   /* load images here */
@@ -53,9 +55,8 @@
     if (cur.lifespan > 1){
       strokeWeight(cur.lifespan)
     } else {
-      strokeWeight(0)
+      strokeWeight(1)
     }
-
 
 
     stroke(cur.lifespan*25.5,0,255)
@@ -73,12 +74,12 @@
     //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
 
 
-    //env stuff! (unaffected stuff, but not moving)
+    //env stuff! (unaffected stuff, but not moving, ON THE GROUND
 
-    if (cur.lifespanB > 0){
+    if (cur.lifespanB > 1){
       strokeWeight(cur.lifespanB)
     } else {
-      strokeWeight(0)
+      strokeWeight(1)
     }
 
     stroke(cur.lifespanB*25.5,0,255)
@@ -88,6 +89,34 @@
     cur.lifespanB -= 1/30;
 
   }
+
+
+
+  function drawAllC(cur,prev){
+    //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
+
+
+    //env stuff! (unaffected stuff, but not moving, IN THE SMKY
+
+    if (cur.lifespanC > 1){
+      strokeWeight(cur.lifespanC)
+    } else {
+      strokeWeight(1)
+    }
+
+    stroke(cur.lifespanC*25.5,0,255)
+
+    line(cur.xLeftCenter, cur.yLeftCenter, cur.xCenterTop, cur.yCenterTop)
+
+    line(cur.xRightCenter, cur.yRightCenter, cur.xCenterTop, cur.yCenterTop)
+
+    
+    cur.lifespanC -= 1/30;
+
+  }
+
+  
+
 
 
 
@@ -119,7 +148,7 @@
 
       //import everything for development
 
-          let wristX = hand.wrist.x;
+        let wristX = hand.wrist.x;
         let wristY = hand.wrist.y;
         let wristZ = hand.wrist.z3D;
 
@@ -258,7 +287,7 @@
   // You can make addtional elements here, but keep the hand drawing inside the for loop. 
   //------------------------------------------------------
 
-  
+
 
 
 
@@ -275,7 +304,7 @@
 
 
 
-  if (frameCount % spawnRate === 1){ //push this at every 15 frames, no matter what
+  if (frameCount % spawnRate === 1){ 
     locationB.push({
     xLeftBottom: 0,
     yLeftBottom: canvasHeight,
@@ -288,6 +317,23 @@
   });
   }
 
+
+
+    if (frameCount % (spawnRate*2) === 1){ 
+    locationC.push({
+    xLeftCenter: 0,
+    yLeftCenter: canvasHeight/2,
+
+    xCenterTop: canvasWidth/2,
+    yCenterTop: 0,
+
+    xRightCenter: canvasWidth,
+    yRightCenter: canvasHeight/2,
+
+    lifespanC: 10
+
+  });
+  }
 
 
 
@@ -334,7 +380,33 @@
 
       cur.xRightBottom = ((cur.xRightBottom - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
 
+      //cur.yPosIndexTip -= 5;
+      //cur.yPosThumbMcp -= 5;
+      //cur.yPosThumbTip -= 5;
 
+      canvasHeight;
+      canvasWidth;
+    }
+
+
+    for (let i = 0; i < locationC.length; i++) {
+      let cur = locationC[i];
+
+      //if yposindextip is on the bottom half of the screen
+
+      cur.yLeftCenter = ((cur.yLeftCenter - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
+
+      cur.yRightCenter = ((cur.yRightCenter - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
+
+      cur.yCenterTop = ((cur.yCenterTop - canvasHeight/2) * (timeFactor) ) + (canvasHeight/2)
+
+
+
+      cur.xLeftCenter = ((cur.xLeftCenter - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
+
+      cur.xRightCenter = ((cur.xRightCenter - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
+
+      cur.xCenterTop = ((cur.xCenterTop - canvasWidth/2) * (timeFactor) ) + (canvasWidth/2)
 
       //cur.yPosIndexTip -= 5;
       //cur.yPosThumbMcp -= 5;
@@ -350,15 +422,17 @@
 
 
 
+    for (let i=0;i<locationC.length;i++) {      //go through each entry in locationC
 
+          let cur = locationC[i];
+          let prev = locationC[i-10];               //change this value to change which past value that the trail goes to
 
-    for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
-
-          let cur = locationA[i];
-          let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
-
-          drawAll(cur,prev)
+          drawAllC(cur,prev)
       }
+
+
+
+
 
 
 
@@ -371,16 +445,22 @@
           drawAllB(cur,prev)
       }
 
+    for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+
+          let cur = locationA[i];
+          let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+
+          drawAll(cur,prev)
+      }
 
 
 
-
-      if (locationA.length > 50) {   //limit of 100 entries
+      if (locationA.length > 100) {   //limit of 100 entries
         locationA.shift();
       }
       
 
-      if (locationB.length > 20) {   //limit of 100 entries
+      if (locationB.length > 30) {   //limit of 100 entries
         locationB.shift();
       }
 
@@ -400,7 +480,6 @@
     ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
     pop();
   }
-
 
   function fingerPuppet(x, y) {
     fill(255, 38, 219) // pink
