@@ -24,7 +24,7 @@ alreadyUpdated = false;
 /* load images here */
 function prepareInteraction() {
   //bgImage = loadImage('/images/background.png');
-  darkFade = loadImage("darkness.png")
+  bgImg = loadImage("wallpaper.png")
 }
 
 
@@ -34,6 +34,10 @@ function drawInteraction(faces, hands) {
   // for loop to capture if there is more than one hand on the screen. This applies the same process to all hands.
 
   oncePerFrame = true;
+
+  image(bgImg,0,0,1280,960)
+
+
 
 
   for (let i = 0; i < hands.length; i++) {
@@ -142,11 +146,23 @@ function drawInteraction(faces, hands) {
 function drawAll(cur,prev){
   //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
   
-  stroke(10)
+  strokeWeight(20)
+
+  stroke(0)
 
   line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
 
   line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
+
+  strokeWeight(10)
+
+  stroke("magenta")
+
+  line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
+
+  line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
+
+
 }
 
 
@@ -175,8 +191,10 @@ if (updated === true){     // if the points have been updated, run this. basical
         let cur = locationA[i];
         let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
         drawAll(cur,prev)
-        rect(thumbMcpX,thumbMcpY,50,50)
+        //rect(thumbMcpX,thumbMcpY,50,50)
     }
+
+
 
   } else 
     {

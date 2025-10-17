@@ -34,7 +34,7 @@
 // const  CaptureHeight = 960;
 
 const  CaptureWidth = 1280;
-const  CaptureHeight = 720;
+const  CaptureHeight = 920;
 
 
 
