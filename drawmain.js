@@ -25,7 +25,67 @@ alreadyUpdated = false;
 
 let timeFactor = 1; //max and default is 1. changes how fast the lines move
 
-function importAllTrackers(){
+
+/* load images here */
+function prepareInteraction() {
+  //bgImage = loadImage('/images/background.png');
+  bgImg = loadImage("wallpaper.png")
+}
+
+
+
+
+function drawAll(cur,prev){
+  //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
+  
+  strokeWeight(20)
+
+  stroke(0)
+
+  line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
+
+  line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
+
+  strokeWeight(10)
+
+  stroke(cur.lifespan,0,255)
+
+  line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
+
+  line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
+
+  cur.lifespan -= 1;
+
+}
+
+
+
+
+
+function drawInteraction(faces, hands) {
+  // hands part
+  // for loop to capture if there is more than one hand on the screen. This applies the same process to all hands.
+
+  oncePerFrame = true;
+
+  image(bgImg,0,0,1280,960)
+
+
+
+
+  for (let i = 0; i < hands.length; i++) {
+    let hand = hands[i];
+    //console.log(hand);
+    if (showKeypoints) {
+      drawConnections(hand)
+    }
+
+    // This is how to load in the x and y of a point on the hand.
+    let indexFingerTipX = hand.index_finger_tip.x;
+    let indexFingerTipY = hand.index_finger_tip.y;
+
+    //import everything for development
+
         let wristX = hand.wrist.x;
       let wristY = hand.wrist.y;
       let wristZ = hand.wrist.z3D;
@@ -114,67 +174,9 @@ function importAllTrackers(){
       let pinkyFingerTipY = hand.pinky_finger_tip.y;
       let pinkyFingerTipZ = hand.pinky_finger_tip.z;
 
-}
-
-/* load images here */
-function prepareInteraction() {
-  //bgImage = loadImage('/images/background.png');
-  bgImg = loadImage("wallpaper.png")
-}
-
-
-
-function drawInteraction(faces, hands) {
-  // hands part
-  // for loop to capture if there is more than one hand on the screen. This applies the same process to all hands.
-
-  oncePerFrame = true;
-
-  image(bgImg,0,0,1280,960)
-
-
-
-
-  for (let i = 0; i < hands.length; i++) {
-    let hand = hands[i];
-    //console.log(hand);
-    if (showKeypoints) {
-      drawConnections(hand)
-    }
-
-    // This is how to load in the x and y of a point on the hand.
-    let indexFingerTipX = hand.index_finger_tip.x;
-    let indexFingerTipY = hand.index_finger_tip.y;
-
-    //import everything for development
-
-importAllTrackers()
-
       //  let pinkyFingerTipX = hand.pinky_finger_tip.x;
       //  let pinkyFingerTipY = hand.pinky_finger_tip.y;
 
-function drawAll(cur,prev){
-  //rect(cur.xPosIndexTip, cur.yPosIndexTip,50,50)
-  
-  strokeWeight(20)
-
-  stroke(0)
-
-  line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
-
-  line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
-
-  strokeWeight(10)
-
-  stroke(cur.lifespan,0,255)
-
-  line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
-
-  line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
-
-  cur.lifespan -= 1;
-
-}
 
 
 
@@ -198,31 +200,31 @@ if (updated === true){     // if the points have been updated, run this. basical
 
     });
 
-    for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+    //for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
 
 
-        let cur = locationA[i];
-        let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+        //let cur = locationA[i];
+        //let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
 
 
-        drawAll(cur,prev)
+        //drawAll(cur,prev)
         //rect(thumbMcpX,thumbMcpY,50,50)
-    }
+    //}
 
 
 
   } else 
     {
 
-    for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+    //for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
 
 
-        let cur = locationA[i];
-        let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+        //let cur = locationA[i];
+        //let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
 
 
-        drawAll(cur,prev)
-    }
+        //drawAll(cur,prev)
+    //}
   }
 }
 
@@ -242,6 +244,13 @@ Stop drawing on the hands here
 }
 // You can make addtional elements here, but keep the hand drawing inside the for loop. 
 //------------------------------------------------------
+
+
+
+
+
+
+//this stuff only runs once per frame, not per hand every frame
 
     for (let i = 0; i < locationA.length; i++) {
     let cur = locationA[i];
@@ -274,9 +283,34 @@ Stop drawing on the hands here
   }
 
 
+
+
+
+
+
+
+  for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+
+
+        let cur = locationA[i];
+        let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+
+
+        drawAll(cur,prev)
+    }
+
+
+
+
+
+
     if (locationA.length > 10) {   //limit of 100 entries
       locationA.shift();
     }
+
+
+
+
 
 
 
