@@ -39,23 +39,24 @@
 
     //dynamic stuff (affected by user)
     
+  /*
     strokeWeight(20)
 
     stroke(0)
 
     line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
 
-    line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
+    line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)*/
 
-    strokeWeight(10)
+    strokeWeight(cur.lifespan)
 
-    stroke(cur.lifespan,0,255)
+    stroke(cur.lifespan*25.5,0,255)
 
     line(cur.xPosIndexTip, cur.yPosIndexTip, cur.xPosThumbMcp, cur.yPosThumbMcp)
 
     line(cur.xPosThumbMcp, cur.yPosThumbMcp,cur.xPosThumbTip, cur.yPosThumbTip)
 
-    cur.lifespan -= 1;
+    cur.lifespan -= (1/25.5);
 
   }
 
@@ -65,8 +66,13 @@
 
 
     //env stuff! (unaffected stuff, but not moving)
+    strokeWeight(cur.lifespanB)
+
+    stroke(cur.lifespanB*25.5,0,255)
 
     line(cur.xLeftBottom, cur.yLeftBottom, cur.xRightBottom, cur.yLeftBottom)
+    
+    cur.lifespanB -= 1/25.5;
 
   }
 
@@ -202,7 +208,7 @@
         xPosIndexTip: indexFingerTipX,
         yPosIndexTip: indexFingerTipY,
         zPosIndexTip: indexFingerTipZ,
-        lifespan: 255,
+        lifespan: 10,
 
         xPosThumbMcp: thumbMcpX,
         yPosThumbMcp: thumbMcpY,
@@ -262,7 +268,9 @@
     yLeftBottom: canvasHeight,
 
     xRightBottom: canvasWidth,
-    yRightBottom: canvasHeight
+    yRightBottom: canvasHeight,
+
+    lifespanB: 10
 
   });
   }
