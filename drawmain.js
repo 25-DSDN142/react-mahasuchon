@@ -1,6 +1,10 @@
 // ----=  HANDS  =----
 
+//ensure these are the same as in 0_displaySettings.js
 
+
+canvasWidth = 1280;
+canvasHeight = 920;
 
 
 let oldX;
@@ -18,6 +22,8 @@ let locationB = [];
 let updated = false;
 
 alreadyUpdated = false;
+
+let timeFactor = 1
 
 
 
@@ -188,8 +194,12 @@ if (updated === true){     // if the points have been updated, run this. basical
     });
 
     for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+
+
         let cur = locationA[i];
         let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+
+
         drawAll(cur,prev)
         //rect(thumbMcpX,thumbMcpY,50,50)
     }
@@ -200,8 +210,12 @@ if (updated === true){     // if the points have been updated, run this. basical
     {
 
     for (let i=0;i<locationA.length;i++) {      //go through each entry in locationA
+
+
         let cur = locationA[i];
         let prev = locationA[i-10];               //change this value to change which past value that the trail goes to
+
+
         drawAll(cur,prev)
     }
   }
@@ -224,13 +238,42 @@ Stop drawing on the hands here
 // You can make addtional elements here, but keep the hand drawing inside the for loop. 
 //------------------------------------------------------
 
-  for (let i = 0; i < locationA.length; i++) {
-  let cur = locationA[i];
-      
-  cur.yPosIndexTip -= 5;
-  cur.yPosThumbMcp -= 5;
-  cur.yPosThumbTip -= 5;
-}
+    for (let i = 0; i < locationA.length; i++) {
+    let cur = locationA[i];
+
+    //if yposindextip is on the bottom half of the screen
+
+    cur.yPosIndexTip = ((cur.yPosIndexTip - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+
+    cur.yPosThumbMcp = ((cur.yPosThumbMcp - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+
+    cur.yPosThumbTip = ((cur.yPosThumbTip - canvasHeight/2) * (0.98*timeFactor) ) + (canvasHeight/2)
+
+
+    cur.xPosIndexTip = ((cur.xPosIndexTip - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+
+    cur.xPosThumbMcp = ((cur.xPosThumbMcp - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+
+    cur.xPosThumbTip = ((cur.xPosThumbTip - canvasWidth/2) * (0.98*timeFactor) ) + (canvasWidth/2)
+
+
+
+
+        
+    //cur.yPosIndexTip -= 5;
+    //cur.yPosThumbMcp -= 5;
+    //cur.yPosThumbTip -= 5;
+
+    canvasHeight;
+    canvasWidth;
+  }
+
+
+    if (locationA.length > 10) {   //limit of 100 entries
+      locationA.shift();
+    }
+
+
 
 }
 
