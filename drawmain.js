@@ -217,10 +217,6 @@ Stop drawing on the hands here
 }
 
 
-
-
-
-
 function ghostSelf(){
   push();
   ellipse(pinkyFingerTipX, pinkyFingerTipY, 30, 30);
